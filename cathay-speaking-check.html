@@ -6,121 +6,142 @@
 <title>Cathay Speaking Check</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Mali:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* Layout: one centered column. Slide tabs, sentence pills, a stage of word chips, one big mic button, result card. */
+/* Layout: one centered column. Pink pastel, big rounded corners, paw and heart motifs, one square mascot slot beside the mic. */
 :root{
-  --bg:#edf3f0; --surface:#fbfdfc; --ink:#10241f; --muted:#5b706a; --line:#cddbd5;
-  --jade:#006e60; --jade-ink:#ffffff; --jade-soft:#d6ebe5;
-  --ok:#0a7b5c; --ok-bg:#d6f0e4;
-  --bad:#c0332a; --bad-bg:#fbe0dc;
-  --cur:#d99a1c;
-  --font-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
-  --font-body:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --bg:#fff1f6; --surface:#fffbfd; --ink:#5a2840; --muted:#94677c; --line:#f6cde0;
+  --pink:#df4a82; --pink-ink:#ffffff; --pink-soft:#ffe2ee; --glow:rgba(223,74,130,.22);
+  --ok:#17936c; --ok-bg:#d9f5e8;
+  --bad:#d92f3b; --bad-bg:#ffe4e2;
+  --cur:#ffae1a;
+  --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132'%3E%3Cg fill='%23ffd9e8'%3E%3Cpath transform='translate(18 14) scale(1.1)' d='M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z'/%3E%3Cg transform='translate(78 72)'%3E%3Cellipse cx='12' cy='16' rx='6.5' ry='5.5'/%3E%3Ccircle cx='4.5' cy='9' r='2.6'/%3E%3Ccircle cx='9.5' cy='4.5' r='2.6'/%3E%3Ccircle cx='15.5' cy='4.5' r='2.6'/%3E%3Ccircle cx='20.5' cy='9' r='2.6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); --heart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z'/%3E%3C/svg%3E"); --paw:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 23'%3E%3Cellipse cx='12.5' cy='16' rx='6.5' ry='5.5'/%3E%3Ccircle cx='5' cy='9' r='2.6'/%3E%3Ccircle cx='10' cy='4.5' r='2.6'/%3E%3Ccircle cx='16' cy='4.5' r='2.6'/%3E%3Ccircle cx='21' cy='9' r='2.6'/%3E%3C/svg%3E");
+  --font-display:"Fredoka","Mali",system-ui,sans-serif;
+  --font-body:"Mali","Noto Sans Thai",system-ui,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0b1412; --surface:#121d1a; --ink:#e5f0ec; --muted:#91a9a1; --line:#25362f;
-    --jade:#3cc4a8; --jade-ink:#06231d; --jade-soft:#17332d;
-    --ok:#4fd6a5; --ok-bg:#12372c;
-    --bad:#ff7a6e; --bad-bg:#3a1b18;
-    --cur:#f0b640; color-scheme:dark;
+    --bg:#1d1219; --surface:#2a1a25; --ink:#ffe7f1; --muted:#cfa0b6; --line:#4d2e40;
+    --pink:#ff86b5; --pink-ink:#3b0f25; --pink-soft:#472537; --glow:rgba(255,134,181,.2);
+    --ok:#62e0b4; --ok-bg:#16392e; --bad:#ff7b74; --bad-bg:#432122; --cur:#ffca4d;
+    --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132'%3E%3Cg fill='%2336202f'%3E%3Cpath transform='translate(18 14) scale(1.1)' d='M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z'/%3E%3Cg transform='translate(78 72)'%3E%3Cellipse cx='12' cy='16' rx='6.5' ry='5.5'/%3E%3Ccircle cx='4.5' cy='9' r='2.6'/%3E%3Ccircle cx='9.5' cy='4.5' r='2.6'/%3E%3Ccircle cx='15.5' cy='4.5' r='2.6'/%3E%3Ccircle cx='20.5' cy='9' r='2.6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0b1412; --surface:#121d1a; --ink:#e5f0ec; --muted:#91a9a1; --line:#25362f;
-  --jade:#3cc4a8; --jade-ink:#06231d; --jade-soft:#17332d;
-  --ok:#4fd6a5; --ok-bg:#12372c;
-  --bad:#ff7a6e; --bad-bg:#3a1b18;
-  --cur:#f0b640; color-scheme:dark;
+  --bg:#1d1219; --surface:#2a1a25; --ink:#ffe7f1; --muted:#cfa0b6; --line:#4d2e40;
+  --pink:#ff86b5; --pink-ink:#3b0f25; --pink-soft:#472537; --glow:rgba(255,134,181,.2);
+  --ok:#62e0b4; --ok-bg:#16392e; --bad:#ff7b74; --bad-bg:#432122; --cur:#ffca4d;
+  --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132'%3E%3Cg fill='%2336202f'%3E%3Cpath transform='translate(18 14) scale(1.1)' d='M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z'/%3E%3Cg transform='translate(78 72)'%3E%3Cellipse cx='12' cy='16' rx='6.5' ry='5.5'/%3E%3Ccircle cx='4.5' cy='9' r='2.6'/%3E%3Ccircle cx='9.5' cy='4.5' r='2.6'/%3E%3Ccircle cx='15.5' cy='4.5' r='2.6'/%3E%3Ccircle cx='20.5' cy='9' r='2.6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.5;
+  background-color:var(--bg); background-image:var(--pat); color:var(--ink);
+  font-family:var(--font-body); font-size:16px; line-height:1.55;
   padding-block:20px 48px;
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));
 }
 .wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-h1{font-family:var(--font-display);font-size:1.35rem;margin:0;letter-spacing:-.01em;font-weight:700}
-h1 small{display:block;font-family:var(--font-body);font-weight:400;font-size:.8rem;color:var(--muted);letter-spacing:0}
-.toggle{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
-  border-radius:999px;padding:8px 14px;font:inherit;font-size:.85rem;cursor:pointer}
-.toggle[aria-pressed="true"]{border-color:var(--jade)}
-.toggle .dot{width:9px;height:9px;border-radius:50%;background:var(--muted)}
-.toggle[aria-pressed="true"] .dot{background:var(--jade)}
+h1{font-family:var(--font-display);font-size:1.5rem;margin:0;font-weight:600;line-height:1.2;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px}
+h1 .ico{width:1.1em;height:1.1em;background:var(--pink);-webkit-mask:var(--heart) center/contain no-repeat;mask:var(--heart) center/contain no-repeat;flex:none}
+h1 small{flex-basis:100%;font-family:var(--font-body);font-weight:400;font-size:.8rem;color:var(--muted)}
+.toggle{display:flex;align-items:center;gap:8px;border:2px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:999px;padding:7px 14px;font:inherit;font-size:.85rem;cursor:pointer}
+.toggle[aria-pressed="true"]{border-color:var(--pink)}
+.toggle .dot{width:10px;height:10px;border-radius:50%;background:var(--muted)}
+.toggle[aria-pressed="true"] .dot{background:var(--pink)}
 
-.tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab{flex:1 1 140px;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);
-  border-radius:12px;padding:10px 14px;font:inherit;cursor:pointer;min-width:0}
-.tab b{display:block;font-family:var(--font-display);font-size:1rem}
+.tabs{display:flex;gap:10px;flex-wrap:wrap}
+.tab{flex:1 1 140px;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:18px;padding:10px 16px;font:inherit;cursor:pointer;min-width:0}
+.tab b{display:block;font-family:var(--font-display);font-size:1.05rem;font-weight:600}
 .tab span{font-size:.8rem;color:var(--muted)}
-.tab[aria-selected="true"]{background:var(--jade);border-color:var(--jade);color:var(--jade-ink)}
-.tab[aria-selected="true"] span{color:inherit;opacity:.85}
+.tab[aria-selected="true"]{background:var(--pink);border-color:var(--pink);color:var(--pink-ink);box-shadow:0 6px 16px var(--glow)}
+.tab[aria-selected="true"] span{color:inherit;opacity:.9}
 
 .pills{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.pill{position:relative;min-width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);
+.pill{position:relative;min-width:46px;height:46px;border-radius:16px;border:2px solid var(--line);background:var(--surface);
   color:var(--ink);font:inherit;font-weight:600;cursor:pointer;display:grid;place-items:center}
-.pill[aria-current="true"]{border-color:var(--jade);box-shadow:0 0 0 2px var(--jade) inset}
-.pill i{position:absolute;right:5px;top:5px;width:8px;height:8px;border-radius:50%;background:transparent}
+.pill[aria-current="true"]{border-color:var(--pink);background:var(--pink-soft)}
+.pill i{position:absolute;right:5px;top:5px;width:9px;height:9px;border-radius:50%;background:transparent}
 .pill[data-r="perfect"] i{background:var(--ok)}
 .pill[data-r="partial"] i{background:var(--cur)}
 .pills .score{margin-left:auto;font-size:.8rem;color:var(--muted)}
 
-.stage{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 16px 16px;display:flex;flex-direction:column;gap:16px}
-.slidelabel{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.level{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.level .seg{display:flex;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.level button{border:0;background:transparent;color:var(--ink);font:inherit;font-size:.85rem;padding:7px 14px;cursor:pointer}
+.level button[aria-checked="true"]{background:var(--pink);color:var(--pink-ink);font-weight:600}
+.level button:focus-visible{outline:3px solid var(--cur);outline-offset:-3px}
+
+.stage{background:var(--surface);border:2px solid var(--line);border-radius:28px;padding:20px 16px 18px;display:flex;flex-direction:column;gap:16px;box-shadow:0 10px 28px var(--glow)}
+.slidelabel{font-size:.78rem;letter-spacing:.04em;color:var(--muted);display:flex;align-items:center;gap:6px}
+.slidelabel::before{content:"";width:1.15em;height:1.05em;flex:none;background:var(--pink);-webkit-mask:var(--paw) center/contain no-repeat;mask:var(--paw) center/contain no-repeat}
 .chips{display:flex;flex-wrap:wrap;gap:10px 8px}
-.chip{position:relative;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;
-  padding:8px 11px 7px;text-align:center;cursor:pointer;font:inherit;min-width:0;max-width:100%;display:flex;flex-direction:column;gap:1px;align-items:center}
-.chip .en{font-family:var(--font-display);font-weight:500;font-size:1.3rem;line-height:1.2;overflow-wrap:anywhere}
-.chip .th{font-size:.78rem;color:var(--muted);line-height:1.3}
-.chip .heard{font-size:.7rem;color:var(--bad);min-height:0;line-height:1.2;overflow-wrap:anywhere}
-.chip[data-s="ok"]{background:var(--ok-bg);border-color:var(--ok);animation:pop .28s ease-out}
+.chip{position:relative;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;
+  padding:8px 12px 7px;text-align:center;cursor:pointer;font:inherit;min-width:0;max-width:100%;display:flex;flex-direction:column;gap:1px;align-items:center}
+.chip .en{font-family:var(--font-display);font-weight:500;font-size:1.3rem;line-height:1.25;overflow-wrap:anywhere}
+.chip .th{font-size:.8rem;color:var(--muted);line-height:1.35}
+.chip .heard{font-size:.72rem;color:var(--bad);line-height:1.2;overflow-wrap:anywhere}
+.chip[data-s="ok"]{background:var(--ok-bg);border-color:var(--ok);animation:pop .3s ease-out}
 .chip[data-s="ok"] .en{color:var(--ok)}
 .chip[data-s="bad"]{background:var(--bad-bg);border-color:var(--bad);animation:shake .32s ease-in-out}
 .chip[data-s="bad"] .en{color:var(--bad)}
-.chip.cur{border-color:var(--cur);box-shadow:0 3px 0 var(--cur)}
+.chip.cur{border-color:var(--cur);box-shadow:0 4px 0 var(--cur)}
 .chip:focus-visible,.pill:focus-visible,.tab:focus-visible,.toggle:focus-visible,.btn:focus-visible,.mic:focus-visible{outline:3px solid var(--cur);outline-offset:2px}
-@keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 
 .controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.mic{width:76px;height:76px;border-radius:50%;border:0;background:var(--jade);color:var(--jade-ink);cursor:pointer;
-  display:grid;place-items:center;flex:none;position:relative}
+.mic{width:76px;height:76px;border-radius:50%;border:0;background:var(--pink);color:var(--pink-ink);cursor:pointer;
+  display:grid;place-items:center;flex:none;position:relative;box-shadow:0 8px 18px var(--glow)}
 .mic svg{width:32px;height:32px}
 .mic.on{background:var(--bad);color:#fff}
 .mic.on::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--bad);animation:ring 1.3s ease-out infinite}
 @keyframes ring{from{transform:scale(.92);opacity:.9}to{transform:scale(1.25);opacity:0}}
-.status{flex:1 1 200px;min-width:0}
+.status{flex:1 1 180px;min-width:0}
 .status b{display:block;font-weight:600}
 .status span{color:var(--muted);font-size:.88rem}
-.btn{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:9px 16px;font:inherit;font-size:.9rem;cursor:pointer}
-.btn.primary{background:var(--jade);border-color:var(--jade);color:var(--jade-ink);font-weight:600}
+
+/* Mascot slot: 128 x 128 px square, swaps image every 2 seconds. */
+.mascot{width:128px;height:128px;flex:none;margin-left:auto;border-radius:22px;overflow:hidden;position:relative}
+.mascot img{width:100%;height:100%;object-fit:contain;display:block}
+.mascot .ph{width:100%;height:100%;display:grid;place-items:center;font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:#5a2840;border-radius:22px}
+.mascot.tick > *{animation:pop .35s ease-out}
+
+.btn{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;font:inherit;font-size:.9rem;cursor:pointer}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:var(--pink-ink);font-weight:600}
 .row{display:flex;gap:10px;flex-wrap:wrap}
 
-.result{border-radius:14px;padding:14px 16px;background:var(--jade-soft);display:flex;flex-direction:column;gap:10px}
+.result{border-radius:20px;padding:14px 16px;background:var(--pink-soft);display:flex;flex-direction:column;gap:10px}
 .result[hidden]{display:none}
-.result .big{font-family:var(--font-display);font-size:1.6rem;font-weight:700}
-.notice{border:1px solid var(--bad);background:var(--bad-bg);border-radius:12px;padding:12px 14px;font-size:.9rem}
+.result .big{font-family:var(--font-display);font-size:1.6rem;font-weight:600}
+.notice{border:2px solid var(--bad);background:var(--bad-bg);border-radius:16px;padding:12px 14px;font-size:.9rem}
 .notice[hidden]{display:none}
 .hint{font-size:.82rem;color:var(--muted)}
+
+.burst{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
+.burst i{position:absolute;bottom:-40px;width:var(--s);height:var(--s);background:var(--pink);
+  -webkit-mask:var(--heart) center/contain no-repeat;mask:var(--heart) center/contain no-repeat;animation:floatUp 2s ease-out forwards}
+@keyframes floatUp{to{transform:translateY(-110vh) rotate(24deg);opacity:0}}
 @media (prefers-reduced-motion:reduce){
-  .chip[data-s],.mic.on::after{animation:none}
+  .chip[data-s],.mic.on::after,.mascot.tick > *{animation:none}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Cathay Speaking Check<small>อ่านออกเสียงทีละคำ ถูกมีเสียงติ้ง ผิดมีเสียงแอด</small></h1>
+    <h1><span class="ico" aria-hidden="true"></span>Cathay Speaking Check<small>อ่านออกเสียงทีละคำ ถูกมีเสียงติ้ง ผิดมีเสียงแอด</small></h1>
     <button class="toggle" id="soundBtn" type="button" aria-pressed="true"><span class="dot"></span>เสียงเอฟเฟกต์</button>
   </header>
 
   <div class="tabs" id="tabs" role="tablist"></div>
   <div class="pills" id="pills"></div>
+  <div class="level"><span>ความเข้มงวด</span><div class="seg" id="level" role="radiogroup" aria-label="ความเข้มงวด"></div></div>
 
   <section class="stage" aria-label="ประโยคที่ต้องอ่าน">
     <div class="slidelabel" id="slideLabel"></div>
@@ -134,6 +155,7 @@ h1 small{display:block;font-family:var(--font-body);font-weight:400;font-size:.8
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
       </button>
       <div class="status" aria-live="polite"><b id="stTitle">พร้อมแล้ว</b><span id="stSub">กดไมค์ แล้วอ่านประโยคทีละคำ</span></div>
+      <div class="mascot" id="mascot" aria-hidden="true"></div>
     </div>
     <div class="notice" id="notice" hidden></div>
     <div class="result" id="result" hidden aria-live="polite">
@@ -174,7 +196,8 @@ const ALIAS = {
   four:["for","4","fore"], to:["two","2","too"], for:["4","four"],
   and:["an","n"], new:["knew"], first:["1st"], its:["it","itss"],
   offers:["offer","offers"], class:["klass"], each:["eat"],
-  needs:["need","knees"], of:["off"], is:["his"]
+  needs:["need","knees"], of:["off"], is:["his"],
+  the:["da","de","thee","duh","uh","a"], a:["uh","ah"]
 };
 
 const $ = s => document.querySelector(s);
@@ -397,7 +420,7 @@ function finish(){
     : "แตะคำสีแดงเพื่อฟังเสียงที่ถูกต้อง แล้วลองอีกครั้ง";
   $("#result").hidden = false;
   setStatus(perfect ? "เยี่ยมมาก" : "จบประโยคแล้ว", "ดูผลด้านล่าง");
-  if(perfect) setTimeout(fanfare, 250);
+  if(perfect){ setTimeout(fanfare, 250); hearts(); }
   renderPills();
 }
 
@@ -411,7 +434,7 @@ function startRec(){
   audio();
   if(finished) loadLine();
   rec = new SR();
-  rec.lang = "en-US"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
+  rec.lang = "en-US"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 5;
   rec.onresult = onResult;
   rec.onerror = ev => {
     if(ev.error === "no-speech" || ev.error === "aborted") return;
@@ -451,6 +474,68 @@ function speak(text, rate){
   speechSynthesis.speak(u);
 }
 
+/* ---------- strictness ---------- */
+const LEVEL_NAMES = { easy: "ง่าย", normal: "พอดี", strict: "เป๊ะ" };
+function renderLevel(){
+  const box = $("#level"); box.innerHTML = "";
+  Object.keys(LEVEL_NAMES).forEach(k => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("role", "radio");
+    b.setAttribute("aria-checked", String(k === level));
+    b.textContent = LEVEL_NAMES[k];
+    b.onclick = () => {
+      level = k;
+      try{ localStorage.setItem("csc-level", k); }catch(_){}
+      renderLevel();
+    };
+    box.appendChild(b);
+  });
+}
+
+
+/* ---------- mascot slot ---------- */
+/* Put transparent PNG files (square, 256 x 256 px) next to index.html and list their names here.
+   A file that is missing is shown as a colored square instead. */
+const MASCOT_IMAGES = ["image.jpeg", "image.jpeg", "image.jpeg", "image.jpeg"];
+const MASCOT_MS = 2000;
+const PH_COLORS = ["#ffc2d9", "#e6c9ff", "#ffdcbc", "#c6f0de"];
+(function mascot(){
+  const box = $("#mascot"), n = MASCOT_IMAGES.length;
+  if(!box || !n) return;
+  const ok = new Array(n).fill(false);
+  MASCOT_IMAGES.forEach((src, i) => {
+    const im = new Image();
+    im.onload = () => { ok[i] = true; };
+    im.onerror = () => { ok[i] = false; };
+    im.src = src;
+  });
+  let i = -1;
+  function show(){
+    i = (i + 1) % n; box.innerHTML = "";
+    let el;
+    if(ok[i]){ el = document.createElement("img"); el.src = MASCOT_IMAGES[i]; el.alt = ""; }
+    else { el = document.createElement("div"); el.className = "ph"; el.style.background = PH_COLORS[i % PH_COLORS.length]; el.textContent = String(i + 1); }
+    box.appendChild(el);
+    box.classList.remove("tick"); void box.offsetWidth; box.classList.add("tick");
+  }
+  show(); setInterval(show, MASCOT_MS);
+})();
+
+function hearts(){
+  if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const layer = document.createElement("div");
+  layer.className = "burst"; layer.setAttribute("aria-hidden", "true");
+  for(let k = 0; k < 16; k++){
+    const h = document.createElement("i");
+    h.style.left = (5 + Math.random() * 90) + "%";
+    h.style.animationDelay = (Math.random() * 0.5) + "s";
+    h.style.setProperty("--s", (14 + Math.random() * 16) + "px");
+    layer.appendChild(h);
+  }
+  document.body.appendChild(layer);
+  setTimeout(() => layer.remove(), 2800);
+}
+
 /* ---------- events ---------- */
 $("#mic").onclick = () => { listening ? stopRec() : startRec(); };
 $("#soundBtn").onclick = e => {
@@ -469,6 +554,7 @@ $("#nextBtn").onclick = () => {
   loadLine();
 };
 
+renderLevel();
 loadLine();
 if(!SR) showNotice("เบราว์เซอร์นี้ยังไม่รองรับการฟังเสียง กรุณาเปิดไฟล์นี้ด้วย Google Chrome หรือ Microsoft Edge");
 </script>
