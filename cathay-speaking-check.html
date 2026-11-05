@@ -193,14 +193,31 @@ function lev(a, b){
   }
   return prev[n];
 }
+/* Rough "sounds like" key: keeps the first letter and the consonants, so Cathy/Cathay and offer/offers match. */
+function skel(w){
+  const s = w.replace(/ph/g,"f").replace(/ck/g,"k").replace(/c(?=[eiy])/g,"s").replace(/c/g,"k")
+    .replace(/q/g,"k").replace(/x/g,"ks").replace(/z/g,"s").replace(/(.)\1+/g,"$1");
+  return s.charAt(0) + s.slice(1).replace(/[aeiouy]/g,"");
+}
+let level = "easy";   // easy | normal | strict
+try{ const v = localStorage.getItem("csc-level"); if(v === "easy" || v === "normal" || v === "strict") level = v; }catch(_){}
 function same(heard, target){
   if(!heard || !target) return false;
   if(heard === target) return true;
   if((ALIAS[target]||[]).includes(heard)) return true;
-  const L = target.length;
-  if(L >= 5 && lev(heard, target) <= 1) return true;
-  if(L >= 9 && lev(heard, target) <= 2) return true;
-  return false;
+  if(level === "strict") return false;
+  const L = target.length, d = lev(heard, target);
+  if(level === "normal"){
+    if(L >= 5 && d <= 1) return true;
+    if(L >= 9 && d <= 2) return true;
+    return L >= 5 && skel(heard) === skel(target);
+  }
+  // easy
+  if(L <= 3) return d <= 1 && heard[0] === target[0];
+  if(d <= 1) return true;
+  if(L >= 6 && d <= 2) return true;
+  if(L >= 9 && d <= 3) return true;
+  return skel(heard) === skel(target);
 }
 
 /* ---------- sound ---------- */
@@ -327,33 +344,45 @@ function mark(i, ok, heard){
   paint(i);
   ok ? ting() : buzz();
 }
-function judge(tokens, lastIsInterim){
+/* ranks[k] = the whole transcript as word list for the k-th best guess of the recognizer. */
+function cands(ranks, i){
+  const out = [];
+  ranks.forEach(r => { if(r[i] && !out.includes(r[i])) out.push(r[i]); });
+  return out;
+}
+const hit = (c, t) => c.some(x => same(x, t));
+function judge(ranks, lastIsInterim){
+  const tokens = ranks[0];
   for(let i = judged; i < tokens.length && ptr < words.length; i++){
-    const tok = tokens[i];
+    const c = cands(ranks, i);
     const isLast = lastIsInterim && i === tokens.length - 1;
-    if(same(tok, words[ptr].norm)){
+    if(hit(c, words[ptr].norm)){
       mark(ptr, true); ptr++; judged = i + 1;
     } else if(isLast){
       break;  // the newest interim word may still change
-    } else if(ptr + 1 < words.length && same(tok, words[ptr + 1].norm)){
+    } else if(ptr + 1 < words.length && hit(c, words[ptr + 1].norm)){
       mark(ptr, false, "");            // skipped a word
       ptr++;
       mark(ptr, true); ptr++; judged = i + 1;
     } else {
-      mark(ptr, false, tok); ptr++; judged = i + 1;
+      mark(ptr, false, tokens[i]); ptr++; judged = i + 1;
     }
   }
   markCur();
   if(ptr >= words.length && !finished) finish();
 }
 function onResult(e){
-  const toks = []; let lastInterim = false;
+  const N = 5, ranks = Array.from({length:N}, () => []);
+  let lastInterim = false;
   for(let i = 0; i < e.results.length; i++){
     const r = e.results[i];
-    r[0].transcript.trim().split(/\s+/).map(clean).filter(Boolean).forEach(t => toks.push(t));
+    for(let k = 0; k < N; k++){
+      const alt = r[k] || r[0];
+      alt.transcript.trim().split(/\s+/).map(clean).filter(Boolean).forEach(t => ranks[k].push(t));
+    }
     if(i === e.results.length - 1) lastInterim = !r.isFinal;
   }
-  judge(toks, lastInterim);
+  judge(ranks, lastInterim);
 }
 function finish(){
   finished = true; wantListening = false;
